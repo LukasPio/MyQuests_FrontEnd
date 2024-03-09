@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="../css/index.css" />
+    <link rel="icon" href="../images/app-logo.png" type="image/png" />
+    <script type="module" src="../js/home.js" defer></script>
+    <title>MyQuests</title>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <img src="../images/app-logo.png" alt="MyQuest-logo" class="app-icon" />
+        <p class="app-title">MyQuests</p>
+      </header>
+      <div class="content">
+        <div class="task-manager">
+          <section class="newTaskInfo">
+            <label for="task-name">Task name:</label>
+            <input type="text" id="task-name" />
+          </section>
+          <section class="newTaskInfo">
+            <label
+              for="task-description"
+              type="textarea"
+              id="task-description-label"
+              >Task description (optional):</label
+            >
+            <textarea type="text" id="task-description"></textarea>
+          </section>
+          <button class="save-task">Add task</button>
+        </div>
+        <div class="tasks"></div>
+        <!-- This container will hold the tasks -->
+      </div>
+      <footer class="footer">
+        Made with
+        <img src="../images/heart.png" alt="heart-icon" class="heart-icon" /> by
+        LukasPio
+      </footer>
+    </div>
+  </body>
+</html>
