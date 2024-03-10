@@ -15,7 +15,7 @@
   <body>
     <div class="content">
       <div class="form">
-        <h1 class="form-title">Login</h1>
+        <h1 class="form-title">Register</h1>
         <section class="form-area">
             <label for="name">Enter your name:</label>
             <input type="text" id="name" required />
@@ -30,12 +30,19 @@
         </section>
         <section class="form-area">
             <label for="confirm-password">Confirm your password:</label>
-            <input type="password" id="confirm-password" required />
+            <input type="password" id="password-confirmation" required />
           </section>
         <button class="register-button">Register</button>
-        <button class="register-button">
+        <button class="login-button">
           <a href="./login.html">I already have an account</a>
         </button>
+      </div>
+    </div>
+
+    <div class="modal" id="errorModal">
+      <div class="modal-content">
+        <p id="errorMessage"></p>
+        <span class="close">&times;</span>
       </div>
     </div>
   </body>

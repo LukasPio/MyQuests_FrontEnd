@@ -1,26 +1,38 @@
-const loginButton = document.querySelector(".login-button");
+const loginButton = document.querySelector('.login-button');
+const closeModalButton = document.querySelector(".close")
 
-async function doLogin() {
-    const email = document.querySelector("#email").value;
-    const password = document.querySelector("#password").value;
-  
-    const url = `http://localhost:8080/api/user/verifyLogin?email=${email}&password=${password}`;
-  
-    fetch(url)
-    .then(response => {
-        if (response.ok) {
-            localStorage.setItem('email', email);
-            localStorage.setItem('password', password);
-            window.location.href = '../html/home.html';
-            return response.text();
+let canSendRequest = true;
+
+loginButton.addEventListener('click', () => {
+    const userEmail = document.querySelector('#email').value
+    const userPassword = document.querySelector('#password').value
+    if (canSendRequest) {
+        canSendRequest = false
+        validateLogin(userEmail, userPassword)
+    }
+})
+
+closeModalButton.addEventListener('click', closeModal)
+
+async function validateLogin(email, password) {
+
+    const url = `http://localhost:8080/api/user/verifyLogin?email=${email}&password=${password}`
+
+    fetch(url).then(response => {
+        if (response.status === 200) {
+            window.location.href = '../html/home.html'
+            return;
         }
-        else throw new Error('Failed to verify login');
+        response.text().then(errorMessage => showModal(errorMessage))
     })
-    .then(data => {
-        console.log(data); // "Login is valid." ou "Invalid login"
-    })
-    .catch(error => { console.error(error); }
-    );
-  }
+}
 
-loginButton.addEventListener("click", doLogin);
+function showModal(errorMessage) {
+    document.getElementById('errorMessage').innerText = errorMessage;
+    document.getElementById('errorModal').style.display = 'block';
+}
+
+function closeModal() {
+    document.getElementById('errorModal').style.display = 'none';
+    canSendRequest = true;
+}
