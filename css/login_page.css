@@ -102,12 +102,15 @@ button:hover {
     padding: 20px;
     font-size: 30px;
     position: fixed;
-    width: 300px;
-    height: 100px;
+    width: 375px;
+    height: 150px;
     gap: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;    
+    font-family: 'Roboto';
+    font-weight: 500;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);

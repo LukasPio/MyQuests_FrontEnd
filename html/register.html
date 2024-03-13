@@ -10,6 +10,7 @@
     <script type="module" src="../js/register_page.js" defer></script>
     <link rel="stylesheet" href="../css/register_page.css" />
     <link rel="icon" href="../images/app-logo.png" type="image/png" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Welcome</title>
   </head>
   <body>
@@ -17,9 +18,9 @@
       <div class="form">
         <h1 class="form-title">Register</h1>
         <section class="form-area">
-            <label for="name">Enter your name:</label>
-            <input type="text" id="name" required />
-          </section>
+          <label for="name">Enter your name:</label>
+          <input type="text" id="name" required />
+        </section>
         <section class="form-area">
           <label for="email">Enter your email:</label>
           <input type="email" id="email" required />
@@ -29,9 +30,9 @@
           <input type="password" id="password" required />
         </section>
         <section class="form-area">
-            <label for="confirm-password">Confirm your password:</label>
-            <input type="password" id="password-confirmation" required />
-          </section>
+          <label for="confirm-password">Confirm your password:</label>
+          <input type="password" id="password-confirmation" required />
+        </section>
         <button class="register-button">Register</button>
         <button class="login-button">
           <a href="./login.html">I already have an account</a>
