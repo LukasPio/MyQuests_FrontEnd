@@ -148,6 +148,7 @@ function renderAvatarInput() {
           "Content-type": "application/json; charset=UTF-8",
         },
       });
+      document.querySelector('.userIcon').src = url;
       localStorage.setItem("avatar", url);
     }
   });
