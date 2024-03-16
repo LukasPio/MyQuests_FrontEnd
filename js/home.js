@@ -26,7 +26,13 @@ async function saveTask() {
     if (response.status === 200) {
       clearForm();
       createTaskCard(taskName, taskDescription, false);
+      return;
     }
+    if (response.status === 409) {
+      renderErrorMessage("Conflict.", "You can't create more than 1 task with same name.")
+      return;
+    }
+    renderErrorMessage("Server error.", "Occurred an error in server. code: " + response.status)
   });
 }
 
@@ -169,10 +175,14 @@ function deleteTask(event) {
     color: "white",
   }).then((result) => {
     if (result.isConfirmed) {
-      const taskName = event.target.parentNode.querySelector('.task-secondary-camp').querySelector('h1').textContent
-      const taskDescription = event.target.parentNode.querySelector('.task-secondary-camp').querySelector('p').textContent
+      const taskName = event.target.parentNode
+        .querySelector(".task-secondary-camp")
+        .querySelector("h1").textContent;
+      const taskDescription = event.target.parentNode
+        .querySelector(".task-secondary-camp")
+        .querySelector("p").textContent;
       removeTaskOfDatabase(taskName, taskDescription, false);
-      event.target.parentNode.remove()
+      event.target.parentNode.remove();
     }
   });
 }
@@ -190,12 +200,12 @@ async function removeTaskOfDatabase(taskName, taskDescription, taskCompleted) {
       name: taskName,
       description: taskDescription,
       completed: taskCompleted,
-      userEmail: email
+      userEmail: email,
     }),
-  })
-    .then((response) => {
-      if (!response.ok) throw new Error("An error occurred. code: " + response.status);;
-    })
+  }).then((response) => {
+    if (!response.ok)
+      throw new Error("An error occurred. code: " + response.status);
+  });
 }
 
 function setUserName(email) {
@@ -232,9 +242,8 @@ function getTasksAndRender(email) {
 }
 
 function createTaskCard(name, description, completed) {
+  if (description === null || description === "") description = name;
 
-  if (description === null || description === "") description = name
-  
   const tasks = document.querySelector(".tasks");
 
   const taskSeparator = document.createElement("section");
