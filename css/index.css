@@ -47,13 +47,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 5px;
     text-align: center;
 }
 
 .userIcon {
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
+    border-radius: 20px;
+    transition: 0.3s;
+}
+
+.userIcon:hover {
+    filter: contrast(0.5);
+    cursor: pointer;
 }
 
 .userNameCamp {
@@ -97,16 +103,16 @@
     font-size: 10px;
     margin-left: 20px;
     width: 30px;
-    height: 20px;
+    height: 40px;
     background-color: transparent;
     border: solid wheat 1px;
     color: white;
-    border-radius: 2px;
+    border-radius: 10px;
     transition: 0.6s;
 }
 
 .quitButton:hover {
-    transform: scale(1.2);
+    transform: scale(1.1);
     cursor: pointer;
 }
 

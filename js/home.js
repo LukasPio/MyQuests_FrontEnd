@@ -1,6 +1,9 @@
 window.addEventListener("DOMContentLoaded", verifyUserLogin);
 
 document.querySelector(".save-task").addEventListener("click", saveTask);
+document
+  .querySelector(".userIcon")
+  .addEventListener("click", renderAvatarInput);
 
 async function saveTask() {
   const userEmail = localStorage.getItem("email");
@@ -58,7 +61,7 @@ async function verifyIfEmailIsRegistered(email) {
   ).then((response) => {
     if (response.status === 404) return false;
     else if (response.status === 200) return true;
-    alert("Server error. code: " + response.status);
+    renderErrorMessage("Server error.", "Code: " + response.status);
     return false;
   });
 }
@@ -86,6 +89,70 @@ function quitUser() {
 function startApplication(email) {
   setUserName(email);
   getTasksAndRender(email);
+  setUserAvatar(email);
+  setInterval(() => {
+    document.getElementById("loader").style.display = "none";
+    document.querySelector(".loading").style.display = "none";
+  }, 450);
+}
+
+async function setUserAvatar(email) {
+  if (
+    localStorage.getItem("avatar") === null ||
+    localStorage.getItem("avatar") === ""
+  ) {
+    await getUserAvatarAndSaveInLocalStorage(email);
+  }
+  const avatar = localStorage.getItem("avatar");
+  console.log("Avatar: " + avatar);
+  document.querySelector(".userIcon").src = avatar;
+}
+
+function renderAvatarInput() {
+  Swal.fire({
+    title: "Enter the url to your avatar picture.",
+    text: "For the moment we only accept url to online images.",
+    input: "text",
+    background: "#322e2e",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    color: "white",
+    inputAttributes: {
+      autocapitalize: "off",
+    },
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const url = result.value;
+      console.log("avatar: " + url);
+      fetch("http://localhost:8080/api/user/avatar", {
+        method: "PATCH",
+        body: JSON.stringify({
+          email: localStorage.getItem("email"),
+          avatar: localStorage.getItem("avatar"),
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      });
+      localStorage.setItem("avatar", url);
+    }
+  });
+}
+
+async function getUserAvatarAndSaveInLocalStorage(email) {
+  try {
+    const response = await fetch(
+      "http://localhost:8080/api/user/avatar?email=" + email
+    );
+    if (!response.ok) {
+      throw new Error("An error occurred. code: " + response.status);
+    }
+    const data = await response.text(); // Obtém o corpo da resposta como texto
+    localStorage.setItem("avatar", data); // Salva o avatar no localStorage
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 function deleteTask(event) {
@@ -102,11 +169,33 @@ function deleteTask(event) {
     color: "white",
   }).then((result) => {
     if (result.isConfirmed) {
-      const taskToDelete = event.target.parentNode;
-      const taskList = document.querySelector(".tasks");
-      taskList.remove(taskToDelete);
+      const taskName = event.target.parentNode.querySelector('.task-secondary-camp').querySelector('h1').textContent
+      const taskDescription = event.target.parentNode.querySelector('.task-secondary-camp').querySelector('p').textContent
+      removeTaskOfDatabase(taskName, taskDescription, false);
+      event.target.parentNode.remove()
     }
   });
+}
+
+async function removeTaskOfDatabase(taskName, taskDescription, taskCompleted) {
+  const email = localStorage.getItem("email");
+  const url = "http://localhost:8080/api/task/delete";
+  fetch(url, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    // Corpo da requisição, se necessário
+    body: JSON.stringify({
+      name: taskName,
+      description: taskDescription,
+      completed: taskCompleted,
+      userEmail: email
+    }),
+  })
+    .then((response) => {
+      if (!response.ok) throw new Error("An error occurred. code: " + response.status);;
+    })
 }
 
 function setUserName(email) {
@@ -143,6 +232,9 @@ function getTasksAndRender(email) {
 }
 
 function createTaskCard(name, description, completed) {
+
+  if (description === null || description === "") description = name
+  
   const tasks = document.querySelector(".tasks");
 
   const taskSeparator = document.createElement("section");
@@ -173,8 +265,6 @@ function renderTasks(tasks) {
   tasks.forEach((task) => {
     createTaskCard(task.taskName, task.description);
   });
-  document.getElementById("loader").style.display = "none";
-  document.querySelector(".loading").style.display = "none";
 }
 
 function showModal(errorMessage) {
