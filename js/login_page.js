@@ -6,6 +6,10 @@ let canSendRequest = true;
 loginButton.addEventListener("click", () => {
   const userEmail = document.querySelector("#email").value;
   const userPassword = document.querySelector("#password").value;
+  if (userEmail === "" || userPassword === "") {
+    renderErrorMessage("Error.", "All camps must be filled.")
+    return;
+  }
   if (canSendRequest) {
     canSendRequest = false;
     validateLogin(userEmail, userPassword);
@@ -13,6 +17,16 @@ loginButton.addEventListener("click", () => {
 });
 
 closeModalButton.addEventListener("click", closeModal);
+
+function renderErrorMessage(title, text) {
+  Swal.fire({
+    title: title,
+    text: text,
+    icon: "error",
+    background: "#322e2e",
+    color: "white",
+  });
+}
 
 async function validateLogin(email, password) {
   const url = `http://localhost:8080/api/user/verifyLogin?email=${email}&password=${password}`;
