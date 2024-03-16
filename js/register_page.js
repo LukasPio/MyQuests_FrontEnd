@@ -31,7 +31,7 @@ async function createUser(name, email, password) {
     },
   }).then((response) => {
     if (response.ok) {
-      window.location.href = "../html/login.html";
+      window.location.href = "/html/login.html";
       return;
     }
     if (response.status === 409) {

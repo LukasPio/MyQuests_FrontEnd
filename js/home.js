@@ -50,7 +50,7 @@ async function verifyUserLogin() {
   const isValidEmail = await verifyIfEmailIsRegistered(email);
   if (email == "" || email == null || !isValidEmail) {
     localStorage.removeItem("email");
-    window.location.href = "../html/login.html";
+    window.location.href = "/html/login.html";
   }
   startApplication(email);
 }
@@ -81,7 +81,7 @@ function quitUser() {
   }).then((result) => {
     if (result.isConfirmed) {
       localStorage.removeItem("email");
-      window.location.href = "../html/login.html";
+      window.location.href = "/html/login.html";
     }
   });
 }
@@ -252,7 +252,7 @@ function createTaskCard(name, description, completed) {
   taskDescription.classList.add("task-description");
 
   const binImage = document.createElement("img");
-  binImage.src = "../images/bin.png";
+  binImage.src = "/images/bin.png";
   binImage.classList.add("bin-icon");
   binImage.addEventListener("click", deleteTask);
 

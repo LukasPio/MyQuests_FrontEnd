@@ -36,7 +36,7 @@ async function validateLogin(email, password) {
       });
       return setTimeout(() => {
         localStorage.setItem('email', email)
-        window.location.href = "../html/home.html";
+        window.location.href = "/html/home.html";
         return;
       }, 1000)
     }
