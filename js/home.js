@@ -93,6 +93,7 @@ function quitUser() {
   }).then((result) => {
     if (result.isConfirmed) {
       localStorage.removeItem("email");
+      localStorage.removeItem("avatar");
       window.location.href = "/html/login.html";
     }
   });
@@ -108,12 +109,12 @@ function startApplication(email) {
   }, 450);
 }
 
-async function setUserAvatar(email) {
+function setUserAvatar(email) {
   if (
     localStorage.getItem("avatar") === null ||
     localStorage.getItem("avatar") === ""
   ) {
-    await getUserAvatarAndSaveInLocalStorage(email);
+    getUserAvatarAndSaveInLocalStorage(email);
   }
   const avatar = localStorage.getItem("avatar");
   console.log("Avatar: " + avatar);
