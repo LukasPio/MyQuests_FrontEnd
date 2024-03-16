@@ -11,6 +11,12 @@ async function saveTask() {
   const taskDescription = document
     .querySelector("#task-description")
     .value.trim();
+
+    if (taskName === null || taskName === "") {
+      renderErrorMessage("Empty field.", "Task name must be filled.")
+      return;
+    }
+
   fetch("http://localhost:8080/api/task/save", {
     method: "POST",
     body: JSON.stringify({
