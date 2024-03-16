@@ -13,16 +13,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 40px;
+    min-height: 20px;
     width: 100%;
-    font-size: 14px;
+    font-size: 10px;
     background-color: #322e2e;
     text-align: center;
     color: #999999;
 }
 
 .heart-icon {
-    width: 20px;
+    width: 15px;
     padding: 0 3px;
 }
 
