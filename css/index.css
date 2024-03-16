@@ -28,7 +28,7 @@
 
 .header {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     min-height: 100px;
     width: 100%;
@@ -39,7 +39,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 80%;
     text-align: center;
 }
 
@@ -48,6 +47,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+    gap: 20px;
 }
 
 .userIcon {
@@ -101,8 +101,7 @@
 
 .quitButton {
     font-size: 10px;
-    margin-left: 20px;
-    width: 30px;
+    width: 40px;
     height: 40px;
     background-color: transparent;
     border: solid wheat 1px;
@@ -310,6 +309,17 @@
         font-size: 18px;
         margin: 0 100px 10px 109px;
     }
+    .userNameCamp {
+        font-size: 12px;
+    }
+    .userIcon {
+        width: 50px;
+        height: auto;
+    }
+    .quitButton {
+        width: 30px;
+        height: 30px;
+    }
 }
 @media (max-width: 490px) {
     .task-card {
@@ -343,6 +353,18 @@
     }
     #task-description-label {
         font-size: 13.5px;
+    }
+    .userIcon {
+        width: 30px;
+        height: auto;
+    }
+    .userNameCamp {
+        font-size: 10px;
+    }
+    .quitButton {
+        width: 25px;
+        height: 25px;
+        font-size: 8px;
     }
 }
 

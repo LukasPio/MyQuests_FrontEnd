@@ -12,10 +12,10 @@ async function saveTask() {
     .querySelector("#task-description")
     .value.trim();
 
-    if (taskName === null || taskName === "") {
-      renderErrorMessage("Empty field.", "Task name must be filled.")
-      return;
-    }
+  if (taskName === null || taskName === "") {
+    renderErrorMessage("Empty field.", "Task name must be filled.");
+    return;
+  }
 
   fetch("http://localhost:8080/api/task/save", {
     method: "POST",
@@ -35,10 +35,16 @@ async function saveTask() {
       return;
     }
     if (response.status === 409) {
-      renderErrorMessage("Conflict.", "You can't create more than 1 task with same name.")
+      renderErrorMessage(
+        "Conflict.",
+        "You can't create more than 1 task with same name."
+      );
       return;
     }
-    renderErrorMessage("Server error.", "Occurred an error in server. code: " + response.status)
+    renderErrorMessage(
+      "Server error.",
+      "Occurred an error in server. code: " + response.status
+    );
   });
 }
 
@@ -103,19 +109,21 @@ function startApplication(email) {
   setUserName(email);
   getTasksAndRender(email);
   setUserAvatar(email);
-  document.getElementById("loader").style.display = "none";
-  document.querySelector(".loading").style.display = "none";
+  setInterval(() => {
+    document.getElementById("loader").style.display = "none";
+    document.querySelector(".loading").style.display = "none";
+  }, 700);
 }
 
-function setUserAvatar(email) {
+async function setUserAvatar(email) {
   if (
     localStorage.getItem("avatar") === null ||
     localStorage.getItem("avatar") === ""
   ) {
-    getUserAvatarAndSaveInLocalStorage(email);
+    await getUserAvatarAndSaveInLocalStorage(email);
+    return;
   }
   const avatar = localStorage.getItem("avatar");
-  console.log("Avatar: " + avatar);
   document.querySelector(".userIcon").src = avatar;
 }
 
@@ -146,25 +154,28 @@ function renderAvatarInput() {
           "Content-type": "application/json; charset=UTF-8",
         },
       });
-      document.querySelector('.userIcon').src = url;
+      document.querySelector(".userIcon").src = url;
       localStorage.setItem("avatar", url);
     }
   });
 }
 
 async function getUserAvatarAndSaveInLocalStorage(email) {
-  try {
-    const response = await fetch(
-      "http://localhost:8080/api/user/avatar?email=" + email
-    );
-    if (!response.ok) {
-      throw new Error("An error occurred. code: " + response.status);
-    }
-    const data = await response.text(); // Obtém o corpo da resposta como texto
-    localStorage.setItem("avatar", data); // Salva o avatar no localStorage
-  } catch (error) {
-    console.error(error);
-  }
+  fetch("http://localhost:8080/api/user/avatar?email=" + email)
+    .then((response) => {
+      if (response.status != 200) {
+        renderErrorMessage(
+          "Error.",
+          "An error occurred on server. code: " + response.status
+        );
+        return;
+      }
+      return response.text();
+    })
+    .then((url) => {
+      setUserAvatar(email);
+      localStorage.setItem("avatar", url);
+    });
 }
 
 function deleteTask(event) {
@@ -248,7 +259,10 @@ function getTasksAndRender(email) {
 }
 
 function createTaskCard(name, description, completed) {
+  name.charAt(0).toUpperCase() + name.slice(1);
+  
   if (description === null || description === "") description = name;
+  else description = description.charAt(0).toUpperCase() + description.slice(1)
 
   const tasks = document.querySelector(".tasks");
 
