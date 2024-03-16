@@ -140,7 +140,7 @@ function renderAvatarInput() {
         method: "PATCH",
         body: JSON.stringify({
           email: localStorage.getItem("email"),
-          avatar: localStorage.getItem("avatar"),
+          avatar: result.value,
         }),
         headers: {
           "Content-type": "application/json; charset=UTF-8",
