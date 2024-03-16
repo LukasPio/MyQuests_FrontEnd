@@ -103,10 +103,8 @@ function startApplication(email) {
   setUserName(email);
   getTasksAndRender(email);
   setUserAvatar(email);
-  setInterval(() => {
-    document.getElementById("loader").style.display = "none";
-    document.querySelector(".loading").style.display = "none";
-  }, 450);
+  document.getElementById("loader").style.display = "none";
+  document.querySelector(".loading").style.display = "none";
 }
 
 function setUserAvatar(email) {
