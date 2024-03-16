@@ -13,8 +13,6 @@ a {
     color: #ffffff !important; /* cor desejada */
 }
 
-
-
 .content {
     display: flex;
     flex-direction: column;
@@ -45,13 +43,13 @@ a {
     flex-direction: column;
 }
 
-label {
+.label {
     font-size: 20px;
     font-weight: 400;
 }
 
 
-input {
+#email, #password {
     width: 400px;
     height: 30px;
     background-color: transparent;
@@ -67,7 +65,7 @@ input:focus {
     outline: none;
 }
 
-button {
+.login-button, .register-button {
     width: 200px;
     height: 30px;
     font-weight: 500;
