@@ -29,7 +29,7 @@ function renderErrorMessage(title, text) {
 }
 
 async function validateLogin(email, password) {
-  const url = `http://localhost:8080/api/user/verifyLogin?email=${email}&password=${password}`;
+  const url = `http://3.89.206.94:8080/api/user/verifyLogin?email=${email}&password=${password}`;
 
   fetch(url).then((response) => {
     if (response.status === 200) {
