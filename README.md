@@ -1,4 +1,4 @@
-# A front-end to an to-do-list app with some features as:
+# A front-end to a to-do-list app with some features as:
 #### - Login/register system.
 #### - Minimalist design with dark mode. 
 #### - Change avatar with an url to image.
