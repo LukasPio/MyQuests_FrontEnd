@@ -19,7 +19,7 @@ registerButton.addEventListener("click", () => {
 });
 
 async function createUser(name, email, password) {
-  fetch("https://3.89.206.94:8080/api/user/save", {
+  fetch("http://3.89.206.94:8080/api/user/save", {
     method: "POST",
     body: JSON.stringify({
       name: name,  

@@ -17,7 +17,7 @@ async function saveTask() {
     return;
   }
 
-  fetch("https://3.89.206.94:8080/api/task/save", {
+  fetch("http://3.89.206.94:8080/api/task/save", {
     method: "POST",
     body: JSON.stringify({
       name: taskName,
@@ -75,7 +75,7 @@ async function verifyUserLogin() {
 
 async function verifyIfEmailIsRegistered(email) {
   return fetch(
-    "https://3.89.206.94:8080/api/user/verifyEmail?email=" + email
+    "http://3.89.206.94:8080/api/user/verifyEmail?email=" + email
   ).then((response) => {
     if (response.status === 404) return false;
     else if (response.status === 200) return true;
@@ -144,7 +144,7 @@ function renderAvatarInput() {
     if (result.isConfirmed) {
       const url = result.value;
       console.log("avatar: " + url);
-      fetch("https://3.89.206.94:8080/api/user/avatar", {
+      fetch("http://3.89.206.94:8080/api/user/avatar", {
         method: "PATCH",
         body: JSON.stringify({
           email: localStorage.getItem("email"),
@@ -161,7 +161,7 @@ function renderAvatarInput() {
 }
 
 async function getUserAvatarAndSaveInLocalStorage(email) {
-  fetch("https://3.89.206.94:8080/api/user/avatar?email=" + email)
+  fetch("http://3.89.206.94:8080/api/user/avatar?email=" + email)
     .then((response) => {
       if (response.status != 200) {
         renderErrorMessage(
@@ -206,7 +206,7 @@ function deleteTask(event) {
 
 async function removeTaskOfDatabase(taskName, taskDescription, taskCompleted) {
   const email = localStorage.getItem("email");
-  const url = "https://3.89.206.94:8080/api/task/delete";
+  const url = "http://3.89.206.94:8080/api/task/delete";
   fetch(url, {
     method: "DELETE",
     headers: {
@@ -226,7 +226,7 @@ async function removeTaskOfDatabase(taskName, taskDescription, taskCompleted) {
 }
 
 function setUserName(email) {
-  fetch(`https://3.89.206.94:8080/api/user/name/${email}`)
+  fetch(`http://3.89.206.94:8080/api/user/name/${email}`)
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -243,7 +243,7 @@ function setUserName(email) {
 }
 
 function getTasksAndRender(email) {
-  fetch(`https://3.89.206.94:8080/api/task/${email}`)
+  fetch(`http://3.89.206.94:8080/api/task/${email}`)
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok");
