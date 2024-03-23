@@ -68,7 +68,7 @@ async function verifyUserLogin() {
   const isValidEmail = await verifyIfEmailIsRegistered(email);
   if (email == "" || email == null || !isValidEmail) {
     localStorage.removeItem("email");
-    window.location.href = "/html/login.html";
+    window.location.href = "/html/index.html";
   }
   startApplication(email);
 }
@@ -100,7 +100,7 @@ function quitUser() {
     if (result.isConfirmed) {
       localStorage.removeItem("email");
       localStorage.removeItem("avatar");
-      window.location.href = "/html/login.html";
+      window.location.href = "/html/index.html";
     }
   });
 }
@@ -245,31 +245,27 @@ function setUserName(email) {
 function getTasksAndRender(email) {
   fetch(`https://3.89.206.94:8080/api/task/${email}`)
     .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
+      if (!response.ok) throw new Error("Network response was not ok");
       return response.json();
     })
-    .then((data) => {
-      renderTasks(data);
-    })
-    .catch((error) => {
-      console.error("There was a problem with your fetch operation:", error);
-    });
+    .then((data) => renderTasks(data))
+    .catch((error) =>
+      console.error("There was a problem with your fetch operation:", error)
+    );
 }
 
 function createTaskCard(name, description, completed) {
   name.charAt(0).toUpperCase() + name.slice(1);
-  
-  if (description === null || description === "") description = name;
-  else description = description.charAt(0).toUpperCase() + description.slice(1)
 
+  if (description === null || description === "") description = name;
+  else description = description.charAt(0).toUpperCase() + description.slice(1);
   const tasks = document.querySelector(".tasks");
 
   const taskSeparator = document.createElement("section");
   taskSeparator.classList.add("task-secondary-camp");
 
   const taskCard = document.createElement("span");
+
   taskCard.classList.add("task-card");
 
   const taskName = document.createElement("h1");
